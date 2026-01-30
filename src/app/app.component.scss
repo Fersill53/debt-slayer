@@ -1,0 +1,39 @@
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.nav {
+  display: flex;
+  gap: 0.75rem;
+
+  a {
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.5rem;
+    color: inherit;
+  }
+
+  a.active {
+    border: 1px solid #e5e7eb;
+  }
+}
+
+.content {
+  padding: 1rem;
+}

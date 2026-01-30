@@ -1,0 +1,100 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}
+
+.sub {
+  margin: 0.25rem 0 0;
+  opacity: 0.8;
+}
+
+.dot {
+  margin: 0 0.35rem;
+}
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.9rem;
+}
+
+.meta {
+  min-width: 0;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  opacity: 0.75;
+  margin-top: 0.25rem;
+}
+
+.sep {
+  opacity: 0.7;
+}
+
+.right {
+  text-align: right;
+  display: grid;
+  gap: 0.35rem;
+  justify-items: end;
+}
+
+.bal {
+  font-weight: 700;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.55rem 0.8rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  color: inherit;
+}
+
+.link {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  opacity: 0.9;
+}
+
+.link:hover {
+  opacity: 1;
+}
+
+.empty {
+  padding: 1.25rem;
+  border: 1px dashed #e5e7eb;
+  border-radius: 0.9rem;
+}

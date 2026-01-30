@@ -1,0 +1,16 @@
+<div class="app">
+  <header class="topbar">
+    <div class="brand">Debt Slayer</div>
+
+    <nav class="nav">
+      <a routerLink="/debts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Debts
+      </a>
+      <a routerLink="/debts/add" routerLinkActive="active">Add</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
