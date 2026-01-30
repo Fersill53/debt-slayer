@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { Debt } from '../../models/debt.model';
+
 @Component({
   selector: 'app-debt-add',
   imports: [],
