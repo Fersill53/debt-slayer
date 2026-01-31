@@ -1,14 +1,60 @@
 <div class="app">
   <header class="topbar">
-    <div class="brand">Debt Slayer</div>
+    <a class="brandLink" routerLink="/dashboard" (click)="closeMenu()">
+      Debt Slayer
+    </a>
 
-    <nav class="nav">
-      <a routerLink="/debts" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        Debts
-      </a>
-      <a routerLink="/debts/add" routerLinkActive="active">Add</a>
-    </nav>
+    <div class="navWrap">
+      <button
+        class="hamburger"
+        type="button"
+        aria-label="Open menu"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="toggleMenu()"
+      >
+        <mat-icon aria-hidden="true">{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
+      </button>
+
+      <div class="menu" [class.open]="menuOpen()">
+        <a
+          class="menuLink"
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          Dashboard
+        </a>
+
+        <a
+          class="menuLink"
+          routerLink="/debts"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          Debts
+        </a>
+
+        <a
+          class="menuLink"
+          routerLink="/debts/add"
+          routerLinkActive="active"
+          (click)="closeMenu()"
+        >
+          Add Debt
+        </a>
+      </div>
+    </div>
   </header>
+
+  <button
+    class="backdrop"
+    type="button"
+    *ngIf="menuOpen()"
+    aria-label="Close menu"
+    (click)="closeMenu()"
+  ></button>
 
   <main class="content">
     <router-outlet />
