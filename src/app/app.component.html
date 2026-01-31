@@ -44,6 +44,17 @@
         >
           Add Debt
         </a>
+
+        <a
+          class="menuLink"
+          routerLink="/planner"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMenu()"
+        >
+          Payoff Planner
+        </a>
+
       </div>
     </div>
   </header>
