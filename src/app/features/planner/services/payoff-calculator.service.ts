@@ -13,7 +13,7 @@ export type PlanRow = {
 export type DebtPayoff = {
   debtId: string;
   name: string;
-  payoffMonth: number; 
+  payoffMonth: number; // 1..N
 };
 
 export type PayoffPlan = {
@@ -29,8 +29,8 @@ export type PayoffPlan = {
 
 type SimDebt = {
   id: string;
-  name: string,
-  apr: number,
+  name: string;
+  apr: number;
   minPayment: number;
   balance: number;
 };
@@ -46,8 +46,7 @@ export class PayoffCalculatorService {
         minPayment: d.minPayment,
         balance: d.balance,
       }))
-      .filter( d => d.balance > 0.005);
-  }
+      .filter(d => d.balance > 0.005);
 
     const initialMinTotal = sim.reduce((s, d) => s + d.minPayment, 0);
     const monthlyBudget = this.round2(Math.max(0, initialMinTotal + Math.max(0, extraMonthly)));
@@ -62,19 +61,19 @@ export class PayoffCalculatorService {
     let consecutiveGrowth = 0;
 
     for (let month = 1; month <= maxMonths; month++) {
-      if(sim.every(d => d.balance <= 0.005)) break;
+      if (sim.every(d => d.balance <= 0.005)) break;
 
       // 1) interest
       let monthInterest = 0;
       for (const d of sim) {
-        if(d.balance <- 0.005) continue;
+        if (d.balance <= 0.005) continue;
         const r = (d.apr / 100) / 12;
         const interest = d.balance * r;
         d.balance += interest;
         monthInterest += interest;
       }
 
-      // 2) pay minimums (only for active debts; this naturally rolls freed mins)
+      // 2) pay minimums (only for active debts; this naturally "rolls" freed mins)
       let budgetLeft = monthlyBudget;
       let monthPayment = 0;
 
@@ -91,7 +90,7 @@ export class PayoffCalculatorService {
         warning = 'Your budget is below the sum of minimum payments.';
       }
 
-      // 3) Extra to target
+      // 3) extra to target
       if (budgetLeft > 0.005) {
         const target = this.pickTarget(sim, strategy);
         if (target) {
@@ -102,9 +101,9 @@ export class PayoffCalculatorService {
         }
       }
 
-      // 4) Mark payoffs (when a debt becomes paid off for the first time)
+      // 4) mark payoffs (when a debt becomes paid off for the first time)
       for (const d of sim) {
-        if (!payoffMonthById.has(d.id) && balance <= 0.005) {
+        if (!payoffMonthById.has(d.id) && d.balance <= 0.005) {
           payoffMonthById.set(d.id, month);
         }
       }
@@ -112,7 +111,7 @@ export class PayoffCalculatorService {
       totalInterest += monthInterest;
       totalPaid += monthPayment;
 
-      const remaining = sim.reduce((s, d) => s + Math.min(0, d.balance), 0);
+      const remaining = sim.reduce((s, d) => s + Math.max(0, d.balance), 0);
 
       schedule.push({
         month,
@@ -121,47 +120,47 @@ export class PayoffCalculatorService {
         remaining: this.round2(remaining),
       });
 
-      // Trend detection
+      // trend detection
       if (schedule.length >= 2) {
         const prev = schedule[schedule.length - 2].remaining;
         if (remaining > prev + 0.01) consecutiveGrowth++;
         else consecutiveGrowth = 0;
 
         if (!warning && consecutiveGrowth >= 6) {
-          warning = 'Balances are growing month over month. - Payments may be too low for interest.';
+          warning = 'Balances are growing month over month — payments may be too low for interest.';
         }
       }
     }
 
-    const paidOff = schedule.length > 0 && schedule[schedule.length -1].remaining <= 0.01;
+    const paidOff = schedule.length > 0 && schedule[schedule.length - 1].remaining <= 0.01;
     if (!paidOff && !warning) {
-      warning = 'Not paid off within ${maxMonths} months. Increase extra or max months.';
+      warning = `Not paid off within ${maxMonths} months. Increase extra or max months.`;
     }
 
-    const payoffs: DebtPayoff[] = 
-      .filter(d => payOffMonthById.has(d.id))
-      .map( d => ({
+    const payoffs: DebtPayoff[] = debts
+      .filter(d => payoffMonthById.has(d.id))
+      .map(d => ({
         debtId: d.id,
         name: d.name,
         payoffMonth: payoffMonthById.get(d.id)!,
       }))
       .sort((a, b) => a.payoffMonth - b.payoffMonth);
 
-      const firstPayoffMonth = payoffs.length ? payoffs[0].payoffMonth : null;
+    const firstPayoffMonth = payoffs.length ? payoffs[0].payoffMonth : null;
 
-      return {
-        strategy,
-        months: schedule.length,
-        totalInterest: this.round2(totalInterest),
-        totalPaid: this.round2(totalPaid),
-        schedule,
-        payoffs,
-        firstPayoffMonth,
-        warning,
-      };
-}
+    return {
+      strategy,
+      months: schedule.length,
+      totalInterest: this.round2(totalInterest),
+      totalPaid: this.round2(totalPaid),
+      schedule,
+      payoffs,
+      firstPayoffMonth,
+      warning,
+    };
+  }
 
-  private pickTarget(sim: SimDebt[], strategy: Strategy):  SimDebt | null {
+  private pickTarget(sim: SimDebt[], strategy: Strategy): SimDebt | null {
     const active = sim.filter(d => d.balance > 0.005);
     if (!active.length) return null;
 
@@ -174,7 +173,7 @@ export class PayoffCalculatorService {
       });
     }
 
-    //snowball: lowest balance; Tie-breaker: higher APR
+    // snowball: lowest balance; tie-breaker: higher APR
     return active.reduce((best, cur) => {
       if (cur.balance < best.balance) return cur;
       if (cur.balance === best.balance && cur.apr > best.apr) return cur;
@@ -182,7 +181,7 @@ export class PayoffCalculatorService {
     });
   }
 
-  private round2(n: number) number {
+  private round2(n: number): number {
     return Math.round(n * 100) / 100;
   }
 }
