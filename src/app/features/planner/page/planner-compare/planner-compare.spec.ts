@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Planner } from './planner';
+import { PlannerCompare } from './planner-compare';
 
-describe('Planner', () => {
-  let component: Planner;
-  let fixture: ComponentFixture<Planner>;
+describe('PlannerCompare', () => {
+  let component: PlannerCompare;
+  let fixture: ComponentFixture<PlannerCompare>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Planner]
+      imports: [PlannerCompare]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Planner);
+    fixture = TestBed.createComponent(PlannerCompare);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
