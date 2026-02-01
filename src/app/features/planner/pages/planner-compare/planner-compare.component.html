@@ -1,0 +1,155 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Compare Strategies</h1>
+      <p class="sub">See avalanche vs snowball side-by-side.</p>
+    </div>
+
+    <a mat-stroked-button routerLink="/planner">
+      <mat-icon>arrow_back</mat-icon>
+      Back to planner
+    </a>
+  </header>
+
+  <mat-card class="controls">
+    <mat-card-content>
+      <form class="form" [formGroup]="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Extra monthly payment</mat-label>
+          <input matInput type="number" formControlName="extraMonthly" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Max months</mat-label>
+          <input matInput type="number" formControlName="maxMonths" />
+        </mat-form-field>
+
+        <div class="hint">
+          Uses your debts’ minimum payments + extra monthly, and rolls freed minimums forward automatically.
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <ng-container *ngIf="plans() as p; else empty">
+    <mat-card *ngIf="recommendation() as r" class="rec">
+      <mat-card-content class="recContent">
+        <div class="recTop">
+          <mat-chip-set>
+            <mat-chip [class.win]="r.winner === 'avalanche'">Avalanche</mat-chip>
+            <mat-chip [class.win]="r.winner === 'snowball'">Snowball</mat-chip>
+          </mat-chip-set>
+          <div class="recTitle">{{ r.title }}</div>
+        </div>
+
+        <ul class="recList">
+          <li *ngFor="let reason of r.reasons">{{ reason }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="grid">
+      <mat-card>
+        <mat-card-content>
+          <div class="titleRow">
+            <h2>Avalanche</h2>
+            <span class="warn" *ngIf="p.avalanche.warning">⚠ {{ p.avalanche.warning }}</span>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Months</div>
+              <div class="value">{{ p.avalanche.months }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">Total interest</div>
+              <div class="value">{{ p.avalanche.totalInterest | currency }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">Total paid</div>
+              <div class="value">{{ p.avalanche.totalPaid | currency }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">First payoff</div>
+              <div class="value">
+                <span *ngIf="p.avalanche.firstPayoffMonth as m; else noneA">Month {{ m }}</span>
+                <ng-template #noneA>—</ng-template>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini" *ngIf="p.avalanche.payoffs.length">
+            <div class="miniTitle">Payoff order</div>
+            <div class="chips">
+              <mat-chip-set>
+                <mat-chip *ngFor="let x of p.avalanche.payoffs | slice:0:5">
+                  {{ x.name }} • M{{ x.payoffMonth }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            <div class="miniHint" *ngIf="p.avalanche.payoffs.length > 5">
+              Showing first 5 of {{ p.avalanche.payoffs.length }}.
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-content>
+          <div class="titleRow">
+            <h2>Snowball</h2>
+            <span class="warn" *ngIf="p.snowball.warning">⚠ {{ p.snowball.warning }}</span>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Months</div>
+              <div class="value">{{ p.snowball.months }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">Total interest</div>
+              <div class="value">{{ p.snowball.totalInterest | currency }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">Total paid</div>
+              <div class="value">{{ p.snowball.totalPaid | currency }}</div>
+            </div>
+            <div class="stat">
+              <div class="label">First payoff</div>
+              <div class="value">
+                <span *ngIf="p.snowball.firstPayoffMonth as m; else noneS">Month {{ m }}</span>
+                <ng-template #noneS>—</ng-template>
+              </div>
+            </div>
+          </div>
+
+          <div class="mini" *ngIf="p.snowball.payoffs.length">
+            <div class="miniTitle">Payoff order</div>
+            <div class="chips">
+              <mat-chip-set>
+                <mat-chip *ngFor="let x of p.snowball.payoffs | slice:0:5">
+                  {{ x.name }} • M{{ x.payoffMonth }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            <div class="miniHint" *ngIf="p.snowball.payoffs.length > 5">
+              Showing first 5 of {{ p.snowball.payoffs.length }}.
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <ng-template #empty>
+    <mat-card>
+      <mat-card-content class="empty">
+        Add at least one debt to compare strategies.
+        <div class="emptyActions">
+          <a mat-raised-button color="primary" routerLink="/debts/add">Add Debt</a>
+          <a mat-stroked-button routerLink="/debts">View Debts</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</section>

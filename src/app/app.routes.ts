@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { DashboardComponent } from './features/dashboard/pages/dashboard/dashboard.component';
 import { PlannerComponent } from './features/planner/pages/planner/planner.component';
+import { PlannerCompareComponent } from './features/planner/pages/planner-compare/planner-compare.component';
 
 import { DebtListComponent } from './features/debts/pages/debt-list/debt-list.component';
 import { DebtAddComponent } from './features/debts/pages/debt-add/debt-add.component';
@@ -15,6 +16,7 @@ export const routes: Routes = [
 
   { path: 'dashboard', component: DashboardComponent },
   { path: 'planner', component: PlannerComponent },
+  { path: 'planner/compare', component: PlannerCompareComponent },
 
   // IMPORTANT: add BEFORE :id
   { path: 'debts', component: DebtListComponent },

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlannerCompare } from './planner-compare';
+import { PlannerCompare } from './planner-compare.component';
 
 describe('PlannerCompare', () => {
   let component: PlannerCompare;

@@ -19,6 +19,11 @@
         <span>Payoff Planner</span>
       </a>
 
+      <a mat-menu-item routerLink="/planner/compare" routerLinkActive="activeItem" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>compare_arrows</mat-icon>
+        <span>Compare Strategies</span>
+      </a>
+
       <a mat-menu-item routerLink="/debts" routerLinkActive="activeItem" [routerLinkActiveOptions]="{ exact: true }">
         <mat-icon>credit_card</mat-icon>
         <span>Debts</span>
