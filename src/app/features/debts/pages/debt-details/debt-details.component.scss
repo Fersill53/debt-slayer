@@ -1,0 +1,122 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}
+
+.sub {
+  margin: 0.25rem 0 0;
+  opacity: 0.85;
+}
+
+.dot {
+  margin: 0 0.35rem;
+  opacity: 0.7;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: 420px 1fr;
+    align-items: start;
+  }
+}
+
+.h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.divider {
+  margin: 1rem 0;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.item .label {
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.item .value {
+  font-weight: 800;
+  margin-top: 0.25rem;
+}
+
+.paymentsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.empty {
+  opacity: 0.75;
+}
+
+.payments {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.pRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.pRow:last-child {
+  border-bottom: none;
+}
+
+.pMeta {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.pAmt {
+  font-weight: 800;
+}
+
+.pDate {
+  opacity: 0.75;
+}
+
+.missing {
+  display: grid;
+  gap: 0.75rem;
+}

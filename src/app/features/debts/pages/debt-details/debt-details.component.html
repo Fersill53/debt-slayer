@@ -1,0 +1,96 @@
+<section class="page" *ngIf="debt() as d; else missing">
+  <header class="header">
+    <div>
+      <h1>{{ d.name }}</h1>
+      <p class="sub">
+        Balance <strong>{{ d.balance | currency }}</strong>
+        <span class="dot">•</span>
+        APR <strong>{{ d.apr }}%</strong>
+        <span class="dot">•</span>
+        Min <strong>{{ d.minPayment | currency }}</strong>
+      </p>
+    </div>
+
+    <button mat-stroked-button type="button" (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+  </header>
+
+  <div class="grid">
+    <mat-card>
+      <mat-card-content>
+        <h2 class="h2">Record payment</h2>
+
+        <form class="form" [formGroup]="form" (ngSubmit)="recordPayment()">
+          <mat-form-field appearance="outline">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" formControlName="amount" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput type="date" formControlName="date" />
+          </mat-form-field>
+
+          <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="saving() || form.invalid">
+              <mat-icon>payments</mat-icon>
+              Add payment
+            </button>
+          </div>
+        </form>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="summary">
+          <div class="item">
+            <div class="label">Total paid (logged)</div>
+            <div class="value">{{ totalPaid() | currency }}</div>
+          </div>
+
+          <div class="item">
+            <div class="label">Payments count</div>
+            <div class="value">{{ payments().length }}</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="paymentsHeader">
+          <h2 class="h2">Payments</h2>
+        </div>
+
+        <div class="empty" *ngIf="!payments().length">
+          No payments logged yet.
+        </div>
+
+        <div class="payments" *ngIf="payments().length">
+          <div class="pRow" *ngFor="let p of payments()">
+            <div class="pMeta">
+              <div class="pAmt">{{ p.amount | currency }}</div>
+              <div class="pDate">{{ p.date }}</div>
+            </div>
+
+            <button mat-button color="warn" type="button" (click)="removePayment(p.id)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
+
+<ng-template #missing>
+  <section class="page">
+    <mat-card>
+      <mat-card-content class="missing">
+        <p>Debt not found.</p>
+        <a mat-raised-button color="primary" routerLink="/debts">Back to debts</a>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</ng-template>

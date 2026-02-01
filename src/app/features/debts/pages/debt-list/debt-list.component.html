@@ -36,9 +36,15 @@
         <div class="right">
           <div class="bal">{{ d.balance | currency }}</div>
 
-          <button mat-button type="button" color="warn" (click)="remove(d.id)">
-            Remove
-          </button>
+          <div class="btnRow">
+            <a mat-stroked-button [routerLink]="['/debts', d.id]">
+              Details
+            </a>
+
+            <button mat-button type="button" color="warn" (click)="remove(d.id)">
+              Remove
+            </button>
+          </div>
         </div>
       </mat-card-content>
     </mat-card>
