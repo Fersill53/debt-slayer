@@ -1,102 +1,51 @@
 <section class="page">
   <header class="header">
     <div>
-      <h1>Add debt</h1>
+      <h1>Add Debt</h1>
       <p class="sub">Enter the basics.</p>
     </div>
 
-    <a class="ghost" routerLink="/debts">Back to list</a>
+    <a mat-stroked-button routerLink="/debts">Back</a>
   </header>
 
-  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
-    <div class="grid">
-      <div class="field full">
-        <label for="name">Debt name *</label>
-        <input id="name" type="text" formControlName="name" placeholder="e.g., Chase Freedom" />
-        <p class="error" *ngIf="f.name.touched && f.name.invalid">
-          <span *ngIf="f.name.errors?.['required']">Name is required.</span>
-          <span *ngIf="f.name.errors?.['maxlength']">Keep it under 60 characters.</span>
-        </p>
-      </div>
+  <mat-card>
+    <mat-card-content>
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="grid">
+          <mat-form-field appearance="outline" class="full">
+            <mat-label>Debt name</mat-label>
+            <input matInput formControlName="name" placeholder="e.g., Chase Freedom" />
+          </mat-form-field>
 
-      <div class="field">
-        <label for="balance">Current balance *</label>
-        <input
-          id="balance"
-          type="number"
-          formControlName="balance"
-          inputmode="decimal"
-          step="0.01"
-          min="0"
-          placeholder="e.g., 6449.00"
-        />
-        <p class="error" *ngIf="f.balance.touched && f.balance.invalid">
-          <span *ngIf="f.balance.errors?.['required']">Balance is required.</span>
-          <span *ngIf="f.balance.errors?.['min']">Balance must be greater than 0.</span>
-        </p>
-      </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Current balance</mat-label>
+            <input matInput type="number" formControlName="balance" />
+          </mat-form-field>
 
-      <div class="field">
-        <label for="apr">APR % *</label>
-        <input
-          id="apr"
-          type="number"
-          formControlName="apr"
-          inputmode="decimal"
-          step="0.01"
-          min="0"
-          max="200"
-          placeholder="e.g., 27.99"
-        />
-        <p class="error" *ngIf="f.apr.touched && f.apr.invalid">
-          <span *ngIf="f.apr.errors?.['required']">APR is required.</span>
-          <span *ngIf="f.apr.errors?.['min']">APR can’t be negative.</span>
-          <span *ngIf="f.apr.errors?.['max']">APR looks too high (max 200%).</span>
-        </p>
-      </div>
+          <mat-form-field appearance="outline">
+            <mat-label>APR %</mat-label>
+            <input matInput type="number" formControlName="apr" />
+          </mat-form-field>
 
-      <div class="field">
-        <label for="minPayment">Minimum payment *</label>
-        <input
-          id="minPayment"
-          type="number"
-          formControlName="minPayment"
-          inputmode="decimal"
-          step="0.01"
-          min="0"
-          placeholder="e.g., 150.00"
-        />
-        <p class="error" *ngIf="f.minPayment.touched && f.minPayment.invalid">
-          <span *ngIf="f.minPayment.errors?.['required']">Minimum payment is required.</span>
-          <span *ngIf="f.minPayment.errors?.['min']">Minimum payment must be greater than 0.</span>
-        </p>
-      </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Minimum payment</mat-label>
+            <input matInput type="number" formControlName="minPayment" />
+          </mat-form-field>
 
-      <div class="field">
-        <label for="dueDay">Due day (1–31, optional)</label>
-        <input
-          id="dueDay"
-          type="number"
-          formControlName="dueDay"
-          inputmode="numeric"
-          step="1"
-          min="1"
-          max="31"
-          placeholder="e.g., 15"
-        />
-        <p class="error" *ngIf="f.dueDay.touched && f.dueDay.invalid">
-          <span *ngIf="f.dueDay.errors?.['min']">Must be at least 1.</span>
-          <span *ngIf="f.dueDay.errors?.['max']">Must be 31 or less.</span>
-        </p>
-      </div>
-    </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Due day (optional)</mat-label>
+            <input matInput type="number" formControlName="dueDay" />
+          </mat-form-field>
+        </div>
 
-    <div class="actions">
-      <button class="btn ghostBtn" type="button" (click)="cancel()" [disabled]="saving()">Cancel</button>
-      <button class="btn primary" type="submit" [disabled]="saving() || form.invalid">
-        <span *ngIf="!saving()">Save debt</span>
-        <span *ngIf="saving()">Saving…</span>
-      </button>
-    </div>
-  </form>
+        <div class="actions">
+          <button mat-button type="button" (click)="cancel()" [disabled]="saving()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="saving() || form.invalid">
+            <span *ngIf="!saving()">Save</span>
+            <span *ngIf="saving()">Saving…</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </section>

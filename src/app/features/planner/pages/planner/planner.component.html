@@ -2,114 +2,105 @@
   <header class="header">
     <div>
       <h1>Payoff Planner</h1>
-      <p class="sub">Choose a strategy and an extra monthly payment to see a payoff timeline.</p>
+      <p class="sub">Avalanche or snowball — add extra monthly payment and see the timeline.</p>
     </div>
   </header>
 
   <div class="layout">
-    <form class="card" [formGroup]="form">
-      <div class="field">
-        <label for="strategy">Strategy</label>
-        <select id="strategy" formControlName="strategy">
-          <option value="avalanche">Avalanche (highest APR first)</option>
-          <option value="snowball">Snowball (lowest balance first)</option>
-        </select>
-      </div>
+    <mat-card>
+      <mat-card-content>
+        <form class="form" [formGroup]="form">
+          <mat-form-field appearance="outline">
+            <mat-label>Strategy</mat-label>
+            <mat-select formControlName="strategy">
+              <mat-option value="avalanche">Avalanche (highest APR first)</mat-option>
+              <mat-option value="snowball">Snowball (lowest balance first)</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-      <div class="field">
-        <label for="extraMonthly">Extra monthly payment</label>
-        <input
-          id="extraMonthly"
-          type="number"
-          formControlName="extraMonthly"
-          inputmode="decimal"
-          step="1"
-          min="0"
-          placeholder="e.g., 200"
-        />
-        <p class="hint">This gets added to your total minimum payments each month.</p>
-      </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Extra monthly payment</mat-label>
+            <input matInput type="number" formControlName="extraMonthly" />
+          </mat-form-field>
 
-      <div class="field">
-        <label for="maxMonths">Max months to simulate</label>
-        <input
-          id="maxMonths"
-          type="number"
-          formControlName="maxMonths"
-          inputmode="numeric"
-          step="1"
-          min="1"
-          max="600"
-        />
-        <p class="hint">If you don’t pay off within this range, the planner warns you.</p>
-      </div>
+          <mat-form-field appearance="outline">
+            <mat-label>Max months</mat-label>
+            <input matInput type="number" formControlName="maxMonths" />
+          </mat-form-field>
 
-      <div class="note" *ngIf="plan()?.warning as warn">
-        <div class="noteTitle">Heads up</div>
-        <div class="noteBody">{{ warn }}</div>
-      </div>
-    </form>
+          <mat-card class="warn" *ngIf="plan()?.warning as warn">
+            <mat-card-content>
+              <div class="warnTitle">Heads up</div>
+              <div class="warnBody">{{ warn }}</div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </mat-card-content>
+    </mat-card>
 
     <div class="right">
       <div class="stats" *ngIf="plan() as p; else empty">
-        <article class="stat">
-          <div class="label">Months</div>
-          <div class="value">{{ p.months }}</div>
-        </article>
+        <mat-card>
+          <mat-card-content>
+            <div class="label">Months</div>
+            <div class="value">{{ p.months }}</div>
+          </mat-card-content>
+        </mat-card>
 
-        <article class="stat">
-          <div class="label">Total interest</div>
-          <div class="value">{{ p.totalInterest | currency }}</div>
-        </article>
+        <mat-card>
+          <mat-card-content>
+            <div class="label">Total interest</div>
+            <div class="value">{{ p.totalInterest | currency }}</div>
+          </mat-card-content>
+        </mat-card>
 
-        <article class="stat">
-          <div class="label">Total paid</div>
-          <div class="value">{{ p.totalPaid | currency }}</div>
-        </article>
+        <mat-card>
+          <mat-card-content>
+            <div class="label">Total paid</div>
+            <div class="value">{{ p.totalPaid | currency }}</div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
       <ng-template #empty>
-        <div class="empty">
-          Add at least one debt to generate a payoff plan.
-        </div>
+        <mat-card>
+          <mat-card-content>Add at least one debt to generate a plan.</mat-card-content>
+        </mat-card>
       </ng-template>
 
-      <div class="tableCard" *ngIf="plan() as p">
-        <header class="tableHeader">
-          <h2>Schedule</h2>
+      <mat-card *ngIf="plan() as p">
+        <mat-card-content>
+          <div class="tableHeader">
+            <h2>Schedule</h2>
+            <button mat-stroked-button type="button" (click)="toggleShowAll()" [disabled]="p.schedule.length <= 12">
+              <span *ngIf="!showAll()">Show all</span>
+              <span *ngIf="showAll()">Show first 12</span>
+            </button>
+          </div>
 
-          <button class="btn" type="button" (click)="toggleShowAll()" [disabled]="p.schedule.length <= 12">
-            <span *ngIf="!showAll()">Show all</span>
-            <span *ngIf="showAll()">Show first 12</span>
-          </button>
-        </header>
+          <div class="tableWrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th class="num">Payment</th>
+                  <th class="num">Interest</th>
+                  <th class="num">Remaining</th>
+                </tr>
+              </thead>
 
-        <div class="tableWrap">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th class="num">Payment</th>
-                <th class="num">Interest</th>
-                <th class="num">Remaining</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr *ngFor="let row of (showAll() ? p.schedule : (p.schedule | slice:0:12))">
-                <td>{{ row.month }}</td>
-                <td class="num">{{ row.payment | currency }}</td>
-                <td class="num">{{ row.interest | currency }}</td>
-                <td class="num">{{ row.remaining | currency }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="foot" *ngIf="p.schedule.length > 12">
-          Showing {{ showAll() ? p.schedule.length : 12 }} of {{ p.schedule.length }} months.
-        </p>
-      </div>
+              <tbody>
+                <tr *ngFor="let row of (showAll() ? p.schedule : (p.schedule | slice:0:12))">
+                  <td>{{ row.month }}</td>
+                  <td class="num">{{ row.payment | currency }}</td>
+                  <td class="num">{{ row.interest | currency }}</td>
+                  <td class="num">{{ row.remaining | currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </section>

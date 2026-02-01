@@ -3,15 +3,30 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 import { GoalStore } from '../../services/goal-store.service';
-import { Goal } from '../../models/goal.models';
+import { Goal } from '../../models/goal.model';
 
 type Category = 'trip' | 'bill' | 'repair' | 'gift' | 'other';
 
 @Component({
   selector: 'app-goal-add',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
   templateUrl: './goal-add.component.html',
   styleUrls: ['./goal-add.component.scss'],
 })
@@ -30,10 +45,6 @@ export class GoalAddComponent {
     targetDate: ['', [Validators.required]],
   });
 
-  get f() {
-    return this.form.controls;
-  }
-
   cancel() {
     this.router.navigateByUrl('/goals');
   }
@@ -45,7 +56,6 @@ export class GoalAddComponent {
     if (this.form.invalid) return;
 
     const raw = this.form.getRawValue();
-
     const targetAmount = Number(raw.targetAmount);
     const savedSoFar = Math.max(0, Math.min(Number(raw.savedSoFar), targetAmount));
 

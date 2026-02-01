@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { StorageService } from '../../../core/storage/storage.service';
-import { Goal } from '../models/goal.models';
+import { Goal } from '../models/goal.model';
 
 const KEY = 'debt-slayer.goals.v1';
 

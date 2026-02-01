@@ -1,101 +1,24 @@
 .app {
   min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  background: #f8fafc;
 }
 
-.topbar {
+.toolbar {
   position: sticky;
   top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 1rem;
-  border-bottom: 1px solid #e5e7eb;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-.brandLink {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 900;
-  letter-spacing: 0.4px;
-}
-
-.navWrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.hamburger {
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  border-radius: 0.85rem;
-  padding: 0.55rem 0.65rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.03);
-}
-
-.hamburger mat-icon {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-}
-
-.menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 0.55rem);
-  width: 240px;
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  background: #ffffff;
-  padding: 0.4rem;
-  display: none;
-  z-index: 30;
-  box-shadow: 0 12px 40px rgba(17, 24, 39, 0.12);
-}
-
-.menu.open {
-  display: grid;
-  gap: 0.25rem;
-}
-
-.menuLink {
-  text-decoration: none;
-  color: inherit;
-  padding: 0.7rem 0.75rem;
-  border-radius: 0.85rem;
-  display: block;
-}
-
-.menuLink.active {
-  background: #f3f4f6;
-}
-
-.menuLink:hover {
-  background: #f9fafb;
-}
-
-.backdrop {
-  position: fixed;
-  inset: 0;
   z-index: 10;
-  background: rgba(15, 23, 42, 0.04);
-  border: none;
-  padding: 0;
-  cursor: default;
+}
+
+.brand {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 .content {
-  padding: 1.25rem 0;
+  padding: 1.25rem 1rem;
 }

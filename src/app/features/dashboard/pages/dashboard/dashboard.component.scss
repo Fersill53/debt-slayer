@@ -1,9 +1,13 @@
 .page {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
   margin-bottom: 1rem;
 
   h1 {
@@ -17,25 +21,24 @@
   opacity: 0.8;
 }
 
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .grid {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.9rem;
   grid-template-columns: 1fr;
   margin-bottom: 1rem;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 900px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
   }
-}
-
-.card {
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  padding: 0.9rem;
-  display: grid;
-  gap: 0.35rem;
 }
 
 .label {
@@ -44,58 +47,18 @@
 }
 
 .value {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 800;
+  margin-top: 0.25rem;
 }
 
 .hint {
+  margin-top: 0.25rem;
   opacity: 0.75;
-  font-size: 0.95rem;
 }
 
-.split {
-  display: grid;
-  gap: 0.75rem;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 760px) {
-  .split {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.panel {
-  border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  padding: 0.9rem;
-
-  h2 {
-    margin: 0 0 0.75rem;
-    font-size: 1.1rem;
-  }
-}
-
-.row {
+.ctaRow {
   display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: baseline;
-}
-
-.name {
-  font-weight: 700;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.num {
-  font-weight: 800;
-}
-
-.small {
-  margin-top: 0.4rem;
-  opacity: 0.75;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }

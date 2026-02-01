@@ -3,57 +3,60 @@
     <div>
       <h1>Goals</h1>
       <p class="sub">
-        Total saved:
-        <strong>{{ store.totalSaved() | currency }}</strong>
+        Saved <strong>{{ store.totalSaved() | currency }}</strong>
         <span class="dot">•</span>
-        Total targets:
-        <strong>{{ store.totalTarget() | currency }}</strong>
+        Targets <strong>{{ store.totalTarget() | currency }}</strong>
       </p>
     </div>
 
-    <a class="btn" routerLink="/goals/add">Add goal</a>
+    <a mat-raised-button color="primary" routerLink="/goals/add">
+      <mat-icon>add</mat-icon>
+      Add Goal
+    </a>
   </header>
 
   <div class="list" *ngIf="goalsVm().length; else empty">
-    <article class="row" *ngFor="let g of goalsVm()">
-      <div class="meta">
-        <div class="top">
-          <div class="name">{{ g.name }}</div>
-          <div class="tag" *ngIf="g.category">{{ g.category }}</div>
+    <mat-card *ngFor="let g of goalsVm()">
+      <mat-card-content class="row">
+        <div class="meta">
+          <div class="top">
+            <div class="name">{{ g.name }}</div>
+            <div class="tag" *ngIf="g.category">{{ g.category }}</div>
+          </div>
+
+          <div class="line">
+            <span>Target {{ g.targetAmount | currency }}</span>
+            <span class="sep">•</span>
+            <span>Saved {{ g.savedSoFar | currency }}</span>
+            <span class="sep">•</span>
+            <span>Remaining {{ g.remaining | currency }}</span>
+          </div>
+
+          <div class="line">
+            <span>Target date {{ g.targetDate }}</span>
+            <span class="sep">•</span>
+            <span>Months left {{ g.monthsLeft }}</span>
+            <span class="sep">•</span>
+            <span>Needed {{ g.requiredMonthly | currency }}/mo</span>
+          </div>
+
+          <mat-progress-bar mode="determinate" [value]="g.progressPct"></mat-progress-bar>
+          <div class="pct">{{ g.progressPct }}%</div>
         </div>
 
-        <div class="details">
-          <span>Target: {{ g.targetAmount | currency }}</span>
-          <span class="sep">•</span>
-          <span>Saved: {{ g.savedSoFar | currency }}</span>
-          <span class="sep">•</span>
-          <span>Remaining: {{ g.remaining | currency }}</span>
+        <div class="right">
+          <button mat-button color="warn" type="button" (click)="remove(g.id)">Remove</button>
         </div>
-
-        <div class="details">
-          <span>Target date: {{ g.targetDate }}</span>
-          <span class="sep">•</span>
-          <span>Months left: {{ g.monthsLeft }}</span>
-          <span class="sep">•</span>
-          <span>Needed: {{ g.requiredMonthly | currency }}/mo</span>
-        </div>
-
-        <div class="bar">
-          <div class="fill" [style.width.%]="g.progressPct"></div>
-        </div>
-        <div class="pct">{{ g.progressPct }}%</div>
-      </div>
-
-      <div class="right">
-        <button class="link" type="button" (click)="remove(g.id)">Remove</button>
-      </div>
-    </article>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <ng-template #empty>
-    <div class="empty">
-      <p>No goals yet.</p>
-      <a class="btn" routerLink="/goals/add">Add your first goal</a>
-    </div>
+    <mat-card>
+      <mat-card-content class="empty">
+        <p>No goals yet.</p>
+        <a mat-raised-button color="primary" routerLink="/goals/add">Add your first goal</a>
+      </mat-card-content>
+    </mat-card>
   </ng-template>
 </section>

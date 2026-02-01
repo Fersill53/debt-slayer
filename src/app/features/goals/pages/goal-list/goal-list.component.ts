@@ -2,8 +2,13 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { GoalStore } from '../../services/goal-store.service';
-import { Goal } from '../../models/goal.models';
+import { Goal } from '../../models/goal.model';
 
 type GoalVM = Goal & {
   remaining: number;
@@ -15,17 +20,22 @@ type GoalVM = Goal & {
 @Component({
   selector: 'app-goal-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, CurrencyPipe],
+  imports: [
+    CommonModule,
+    RouterModule,
+    CurrencyPipe,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressBarModule,
+  ],
   templateUrl: './goal-list.component.html',
   styleUrls: ['./goal-list.component.scss'],
 })
 export class GoalListComponent {
   readonly store = inject(GoalStore);
 
-  readonly goalsVm = computed<GoalVM[]>(() => {
-    const goals = this.store.goals();
-    return goals.map(g => this.toVm(g));
-  });
+  readonly goalsVm = computed<GoalVM[]>(() => this.store.goals().map(g => this.toVm(g)));
 
   remove(id: string) {
     this.store.remove(id);
@@ -50,17 +60,13 @@ export class GoalListComponent {
   private monthsUntil(targetIso: string): number {
     const now = new Date();
     const target = new Date(targetIso);
-
     if (!isFinite(target.getTime())) return 0;
 
-    // Count full months difference, but never return < 0
     let months =
       (target.getFullYear() - now.getFullYear()) * 12 +
       (target.getMonth() - now.getMonth());
 
-    // If target day is later in the month than today, treat as still having that month
     if (target.getDate() > now.getDate()) months += 1;
-
     return Math.max(0, months);
   }
 

@@ -1,78 +1,53 @@
-<app-container>
 <section class="page">
   <header class="header">
     <div>
       <h1>Dashboard</h1>
-      <p class="sub">Quick snapshot of where you stand.</p>
+      <p class="sub">Your snapshot.</p>
+    </div>
+
+    <div class="actions">
+      <a mat-stroked-button routerLink="/debts/add">Add Debt</a>
+      <a mat-stroked-button routerLink="/goals/add">Add Goal</a>
     </div>
   </header>
 
   <div class="grid">
-    <article class="card">
-      <div class="label">Total debt</div>
-      <div class="value">{{ store.totalBalance() | currency }}</div>
-      <div class="hint">Across {{ debtCount() }} debt(s)</div>
-    </article>
+    <mat-card>
+      <mat-card-content>
+        <div class="label">Total debt</div>
+        <div class="value">{{ debts.totalBalance() | currency }}</div>
+        <div class="hint">{{ debtCount() }} debt(s)</div>
+      </mat-card-content>
+    </mat-card>
 
-    <article class="card">
-      <div class="label">Total minimum payments</div>
-      <div class="value">{{ store.totalMinPayment() | currency }}</div>
-      <div class="hint">Monthly minimums combined</div>
-    </article>
+    <mat-card>
+      <mat-card-content>
+        <div class="label">Total minimum payments</div>
+        <div class="value">{{ debts.totalMinPayment() | currency }}</div>
+        <div class="hint">Monthly minimums</div>
+      </mat-card-content>
+    </mat-card>
 
-    <article class="card">
-      <div class="label">Weighted APR</div>
-      <div class="value">{{ store.weightedApr() }}%</div>
-      <div class="hint">APR weighted by balances</div>
-    </article>
+    <mat-card>
+      <mat-card-content>
+        <div class="label">Weighted APR</div>
+        <div class="value">{{ debts.weightedApr() }}%</div>
+        <div class="hint">Balance-weighted</div>
+      </mat-card-content>
+    </mat-card>
 
-    <article class="card" *ngIf="nextDue() !== null; else noDue">
-      <div class="label">Next due day</div>
-      <div class="value">{{ nextDue() }}</div>
-      <div class="hint">Day of month (from your entries)</div>
-    </article>
-
-    <ng-template #noDue>
-      <article class="card">
-        <div class="label">Next due day</div>
-        <div class="value">—</div>
-        <div class="hint">Add due days to see this</div>
-      </article>
-    </ng-template>
+    <mat-card>
+      <mat-card-content>
+        <div class="label">Goals remaining</div>
+        <div class="value">{{ totalGoalRemaining() | currency }}</div>
+        <div class="hint">{{ goalCount() }} goal(s)</div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div class="split">
-    <article class="panel" *ngIf="highestAprDebt() as hi; else noneHi">
-      <h2>Highest APR</h2>
-      <div class="row">
-        <div class="name">{{ hi.name }}</div>
-        <div class="num">{{ hi.apr }}%</div>
-      </div>
-      <div class="small">Balance: {{ hi.balance | currency }} • Min: {{ hi.minPayment | currency }}</div>
-    </article>
-
-    <ng-template #noneHi>
-      <article class="panel">
-        <h2>Highest APR</h2>
-        <div class="small">Add a debt to see this.</div>
-      </article>
-    </ng-template>
-
-    <article class="panel" *ngIf="largestBalanceDebt() as big; else noneBig">
-      <h2>Largest Balance</h2>
-      <div class="row">
-        <div class="name">{{ big.name }}</div>
-        <div class="num">{{ big.balance | currency }}</div>
-      </div>
-      <div class="small">APR: {{ big.apr }}% • Min: {{ big.minPayment | currency }}</div>
-    </article>
-
-    <ng-template #noneBig>
-      <article class="panel">
-        <h2>Largest Balance</h2>
-        <div class="small">Add a debt to see this.</div>
-      </article>
-    </ng-template>
+  <div class="ctaRow">
+    <a mat-raised-button color="primary" routerLink="/planner">Open Payoff Planner</a>
+    <a mat-stroked-button routerLink="/goals">View Goals</a>
+    <a mat-stroked-button routerLink="/debts">View Debts</a>
   </div>
 </section>
-</app-container>

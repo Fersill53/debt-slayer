@@ -2,54 +2,54 @@
   <header class="header">
     <div>
       <h1>Debts</h1>
-
       <p class="sub">
-        Total balance:
-        <strong>{{ store.totalBalance() | currency }}</strong>
-      </p>
-
-      <p class="sub" *ngIf="store.debts().length">
-        Total minimum payments:
-        <strong>{{ store.totalMinPayment() | currency }}</strong>
+        Total: <strong>{{ store.totalBalance() | currency }}</strong>
         <span class="dot">•</span>
-        Weighted APR:
-        <strong>{{ store.weightedApr() }}%</strong>
+        Minimums: <strong>{{ store.totalMinPayment() | currency }}</strong>
+        <span class="dot">•</span>
+        Weighted APR: <strong>{{ store.weightedApr() }}%</strong>
       </p>
     </div>
 
-    <a class="btn" routerLink="/debts/add">Add debt</a>
+    <a mat-raised-button color="primary" routerLink="/debts/add">
+      <mat-icon>add</mat-icon>
+      Add Debt
+    </a>
   </header>
 
   <div class="list" *ngIf="store.debts().length; else empty">
-    <article class="row" *ngFor="let d of store.debts()">
-      <div class="meta">
-        <div class="name">{{ d.name }}</div>
-
-        <div class="details">
-          <span>{{ d.apr }}% APR</span>
-          <span class="sep">•</span>
-          <span>Min: {{ d.minPayment | currency }}</span>
-          <ng-container *ngIf="d.dueDay">
+    <mat-card class="row" *ngFor="let d of store.debts()">
+      <mat-card-content class="rowContent">
+        <div class="meta">
+          <div class="name">{{ d.name }}</div>
+          <div class="details">
+            <span>{{ d.apr }}% APR</span>
             <span class="sep">•</span>
-            <span>Due: {{ d.dueDay }}</span>
-          </ng-container>
+            <span>Min {{ d.minPayment | currency }}</span>
+            <ng-container *ngIf="d.dueDay">
+              <span class="sep">•</span>
+              <span>Due {{ d.dueDay }}</span>
+            </ng-container>
+          </div>
         </div>
-      </div>
 
-      <div class="right">
-        <div class="bal">{{ d.balance | currency }}</div>
+        <div class="right">
+          <div class="bal">{{ d.balance | currency }}</div>
 
-        <button class="link" type="button" (click)="remove(d.id)">
-          Remove
-        </button>
-      </div>
-    </article>
+          <button mat-button type="button" color="warn" (click)="remove(d.id)">
+            Remove
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <ng-template #empty>
-    <div class="empty">
-      <p>No debts yet.</p>
-      <a class="btn" routerLink="/debts/add">Add your first debt</a>
-    </div>
+    <mat-card>
+      <mat-card-content class="empty">
+        <p>No debts yet.</p>
+        <a mat-raised-button color="primary" routerLink="/debts/add">Add your first debt</a>
+      </mat-card-content>
+    </mat-card>
   </ng-template>
 </section>

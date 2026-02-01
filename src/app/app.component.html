@@ -1,87 +1,45 @@
 <div class="app">
-  <header class="topbar">
-    <a class="brandLink" routerLink="/dashboard" (click)="closeMenu()">
-      Debt Slayer
-    </a>
+  <mat-toolbar class="toolbar" color="primary">
+    <a class="brand" routerLink="/dashboard">Debt Slayer</a>
 
-    <div class="navWrap">
-      <button
-        class="hamburger"
-        type="button"
-        aria-label="Open menu"
-        [attr.aria-expanded]="menuOpen()"
-        (click)="toggleMenu()"
-      >
-        <mat-icon aria-hidden="true">{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
-      </button>
+    <span class="spacer"></span>
 
-      <div class="menu" [class.open]="menuOpen()">
-        <a
-          class="menuLink"
-          routerLink="/dashboard"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
-        >
-          Dashboard
-        </a>
+    <button mat-icon-button [matMenuTriggerFor]="navMenu" aria-label="Open menu">
+      <mat-icon>menu</mat-icon>
+    </button>
 
-        <a
-          class="menuLink"
-          routerLink="/debts"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
-        >
-          Debts
-        </a>
+    <mat-menu #navMenu="matMenu">
+      <a mat-menu-item routerLink="/dashboard" routerLinkActive="activeItem" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
 
-        <a
-          class="menuLink"
-          routerLink="/debts/add"
-          routerLinkActive="active"
-          (click)="closeMenu()"
-        >
-          Add Debt
-        </a>
+      <a mat-menu-item routerLink="/planner" routerLinkActive="activeItem" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>insights</mat-icon>
+        <span>Payoff Planner</span>
+      </a>
 
-        <a
-          class="menuLink"
-          routerLink="/planner"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="closeMenu()"
-        >
-          Payoff Planner
-        </a>
+      <a mat-menu-item routerLink="/debts" routerLinkActive="activeItem" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>credit_card</mat-icon>
+        <span>Debts</span>
+      </a>
 
-        <a
-          class="menuLink"
-          routerLink="/goals"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true}"
-          (click)="closeMenu()"
-          >Goals</a>
+      <a mat-menu-item routerLink="/debts/add" routerLinkActive="activeItem">
+        <mat-icon>add</mat-icon>
+        <span>Add Debt</span>
+      </a>
 
-          <a
-          class="menuLink"
-          routerLink="/goals/add"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true}"
-          (click)="closeMenu()"
-          >Add Goal</a>
+      <a mat-menu-item routerLink="/goals" routerLinkActive="activeItem" [routerLinkActiveOptions]="{ exact: true }">
+        <mat-icon>flag</mat-icon>
+        <span>Goals</span>
+      </a>
 
-      </div>
-    </div>
-  </header>
-
-  <button
-    class="backdrop"
-    type="button"
-    *ngIf="menuOpen()"
-    aria-label="Close menu"
-    (click)="closeMenu()"
-  ></button>
+      <a mat-menu-item routerLink="/goals/add" routerLinkActive="activeItem">
+        <mat-icon>add_circle</mat-icon>
+        <span>Add Goal</span>
+      </a>
+    </mat-menu>
+  </mat-toolbar>
 
   <main class="content">
     <router-outlet />

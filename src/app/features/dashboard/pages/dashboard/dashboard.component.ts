@@ -1,3 +1,4 @@
+/*
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 
@@ -43,5 +44,37 @@ export class DashboardComponent {
 
     const next = upcoming.find(day => day >= todayDay) ?? upcoming[0];
     return next ?? null;
+  });
+}
+*/
+
+// Adding more MAT interactions below
+
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
+import { DebtStore } from '../../../debts/services/debt-store.service';
+import { GoalStore } from '../../../goals/services/goal-store.service';
+
+@Component({
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule, RouterModule, CurrencyPipe, MatCardModule, MatButtonModule],
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
+})
+export class DashboardComponent {
+  readonly debts = inject(DebtStore);
+  readonly goals = inject(GoalStore);
+
+  readonly debtCount = computed(() => this.debts.debts().length);
+  readonly goalCount = computed(() => this.goals.goals().length);
+
+  readonly totalGoalRemaining = computed(() => {
+    return this.goals.goals().reduce((s, g) => s + Math.max(0, g.targetAmount - g.savedSoFar), 0);
   });
 }
