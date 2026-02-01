@@ -1,0 +1,81 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Add goal</h1>
+      <p class="sub">Trips, bills, repairs—anything you want to plan ahead for.</p>
+    </div>
+
+    <a class="ghost" routerLink="/goals">Back to goals</a>
+  </header>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="grid">
+      <div class="field full">
+        <label for="name">Goal name *</label>
+        <input id="name" type="text" formControlName="name" placeholder="e.g., Hawaii Trip" />
+        <p class="error" *ngIf="f.name.touched && f.name.invalid">
+          <span *ngIf="f.name.errors?.['required']">Name is required.</span>
+          <span *ngIf="f.name.errors?.['maxlength']">Keep it under 60 characters.</span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="category">Category</label>
+        <select id="category" formControlName="category">
+          <option value="trip">Trip</option>
+          <option value="bill">Bill</option>
+          <option value="repair">Repair</option>
+          <option value="gift">Gift</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="targetDate">Target date *</label>
+        <input id="targetDate" type="date" formControlName="targetDate" />
+        <p class="error" *ngIf="f.targetDate.touched && f.targetDate.invalid">
+          <span *ngIf="f.targetDate.errors?.['required']">Target date is required.</span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="targetAmount">Target amount *</label>
+        <input
+          id="targetAmount"
+          type="number"
+          formControlName="targetAmount"
+          inputmode="decimal"
+          step="1"
+          min="0"
+          placeholder="e.g., 2500"
+        />
+        <p class="error" *ngIf="f.targetAmount.touched && f.targetAmount.invalid">
+          <span *ngIf="f.targetAmount.errors?.['required']">Target amount is required.</span>
+          <span *ngIf="f.targetAmount.errors?.['min']">Target must be at least 1.</span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="savedSoFar">Saved so far</label>
+        <input
+          id="savedSoFar"
+          type="number"
+          formControlName="savedSoFar"
+          inputmode="decimal"
+          step="1"
+          min="0"
+          placeholder="e.g., 300"
+        />
+        <p class="hint">If saved is higher than target, it will be capped to the target.</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn ghostBtn" type="button" (click)="cancel()" [disabled]="saving()">Cancel</button>
+      <button class="btn primary" type="submit" [disabled]="saving() || form.invalid">
+        <span *ngIf="!saving()">Save goal</span>
+        <span *ngIf="saving()">Saving…</span>
+      </button>
+    </div>
+  </form>
+</section>

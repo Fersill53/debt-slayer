@@ -1,0 +1,8 @@
+<button class="btn" [class.primary]="variant === 'primary'"
+  [class.ghost]="variant === 'ghost'"
+  [class.link]="variant === 'link'"
+  [attr.type]="type"
+  [disabled]="disabled"
+>
+  <ng-content></ng-content>
+</button>

@@ -55,6 +55,22 @@
           Payoff Planner
         </a>
 
+        <a
+          class="menuLink"
+          routerLink="/goals"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true}"
+          (click)="closeMenu()"
+          >Goals</a>
+
+          <a
+          class="menuLink"
+          routerLink="/goals/add"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true}"
+          (click)="closeMenu()"
+          >Add Goal</a>
+
       </div>
     </div>
   </header>
