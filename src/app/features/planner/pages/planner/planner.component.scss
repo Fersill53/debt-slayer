@@ -113,3 +113,14 @@ td {
 .num {
   text-align: right;
 }
+
+.budgetRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.budgetHint {
+  opacity: 0.85;
+}

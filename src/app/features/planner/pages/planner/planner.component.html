@@ -25,6 +25,16 @@
             <input matInput type="number" formControlName="extraMonthly" />
           </mat-form-field>
 
+  <div class="budgetRow">
+    <div class="budgetHint">
+      Budget suggests: <strong>{{ budgetExtra() | currency }}</strong> available for debt.
+    </div>
+    <button mat-stroked-button type="button" (click)="useBudgetAmount()">
+      Use budget amount
+    </button>
+    <a mat-button routerLink="/budget">Edit budget</a>
+  </div>
+
           <mat-form-field appearance="outline">
             <mat-label>Max months</mat-label>
             <input matInput type="number" formControlName="maxMonths" />

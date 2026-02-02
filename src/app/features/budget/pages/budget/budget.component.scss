@@ -1,0 +1,118 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}
+
+.sub {
+  margin: 0.25rem 0 0;
+  opacity: 0.85;
+  max-width: 55ch;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 980px) {
+  .grid {
+    grid-template-columns: 420px 1fr;
+    align-items: start;
+  }
+}
+
+.h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.divider {
+  margin: 1rem 0;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.item .label {
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.item .value {
+  font-weight: 800;
+  margin-top: 0.25rem;
+}
+
+.strong {
+  font-size: 1.15rem;
+}
+
+.expHeader {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.expActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.expForm {
+  margin-top: 0.75rem;
+}
+
+.expList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.expRow {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .expRow {
+    grid-template-columns: 1.2fr 0.6fr 0.6fr auto;
+  }
+}
+
+.note {
+  margin-top: 0.75rem;
+  opacity: 0.8;
+}
