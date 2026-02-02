@@ -1,5 +1,5 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component, DestroyRef, computed, inject, trackBy } from '@angular/core';
+import { Component, DestroyRef, computed, inject } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -47,7 +47,7 @@ export class BudgetComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly form = this.fb.nonNullable.group({
-    incomeMonthly: [0, [Validators.min(0)]],
+    incomeMonthly: this.fb.nonNullable.control<number>(0, [Validators.min(0)]),
     expenses: this.fb.array([] as any[]),
   });
 
@@ -64,18 +64,14 @@ export class BudgetComponent {
   }));
 
   constructor() {
-    // load store → form
     const current = this.store.budget();
     this.form.controls.incomeMonthly.setValue(current.incomeMonthly, { emitEvent: false });
     this.setExpenses(current.expenses);
 
-    // optional: live-update store summary while typing (but only persist on Save)
-    // We keep the store persistence on "Save" for predictable behavior.
+    // Keeping this pattern so you can later add live preview if you want
     this.form.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        // no-op: this is here if you later want live preview using form values
-      });
+      .subscribe(() => {});
   }
 
   addExpense(type: BudgetExpenseType = 'fixed') {
@@ -97,12 +93,16 @@ export class BudgetComponent {
 
     const raw = this.form.getRawValue();
 
-    const expenses: BudgetExpense[] = (raw.expenses as ExpenseForm[]).map(e => ({
-      id: e.id,
-      name: (e.name ?? '').trim(),
-      amount: this.round2(Number(e.amount)),
-      type: e.type === 'variable' ? 'variable' : 'fixed',
-    })).filter(e => e.name.length > 0 || e.amount > 0);
+    const rawExpenses = (raw.expenses ?? []) as unknown as ExpenseForm[];
+
+    const expenses: BudgetExpense[] = rawExpenses
+      .map((e): BudgetExpense => ({
+        id: e.id,
+        name: (e.name ?? '').trim(),
+        amount: this.round2(Number(e.amount)),
+        type: e.type === 'variable' ? 'variable' : 'fixed',
+      }))
+      .filter(e => e.name.length > 0 || e.amount > 0);
 
     const budget: Budget = {
       incomeMonthly: this.round2(Number(raw.incomeMonthly)),
@@ -120,10 +120,11 @@ export class BudgetComponent {
     this.setExpenses(current.expenses);
   }
 
-  trackById = (index: number, item: any) => item?.value?.id ?? index;
+  trackById = (index: number, ctrl: any) => ctrl?.value?.id ?? index;
 
   private setExpenses(expenses: BudgetExpense[]) {
     this.expensesArray.clear();
+
     for (const e of expenses) {
       this.expensesArray.push(this.expenseGroup({
         id: e.id,
@@ -132,8 +133,8 @@ export class BudgetComponent {
         type: e.type,
       }));
     }
+
     if (!expenses.length) {
-      // seed with two nice starter rows
       this.addExpense('fixed');
       this.addExpense('variable');
     }
@@ -141,10 +142,10 @@ export class BudgetComponent {
 
   private expenseGroup(e: ExpenseForm) {
     return this.fb.nonNullable.group({
-      id: [e.id],
-      name: [e.name, [Validators.maxLength(60)]],
-      amount: [e.amount, [Validators.min(0)]],
-      type: [e.type],
+      id: this.fb.nonNullable.control<string>(e.id),
+      name: this.fb.nonNullable.control<string>(e.name, [Validators.maxLength(60)]),
+      amount: this.fb.nonNullable.control<number>(e.amount, [Validators.min(0)]),
+      type: this.fb.nonNullable.control<BudgetExpenseType>(e.type),
     });
   }
 
