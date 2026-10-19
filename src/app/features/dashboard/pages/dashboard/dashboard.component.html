@@ -1,7 +1,8 @@
 <section class="page">
   <header class="header">
     <div>
-      <h1>Dashboard</h1>
+      <div class="eyebrow">Overview · {{ debtCount() }} debts · {{ goalCount() }} goals</div>
+      <h1>Your <span class="accent">Dashboard</span></h1>
       <p class="sub">Your snapshot.</p>
     </div>
 
@@ -14,32 +15,32 @@
   <div class="grid">
     <mat-card>
       <mat-card-content>
+        <div class="value attention">{{ debts.totalBalance() | currency }}</div>
         <div class="label">Total debt</div>
-        <div class="value">{{ debts.totalBalance() | currency }}</div>
         <div class="hint">{{ debtCount() }} debt(s)</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-content>
-        <div class="label">Total minimum payments</div>
         <div class="value">{{ debts.totalMinPayment() | currency }}</div>
+        <div class="label">Total minimum payments</div>
         <div class="hint">Monthly minimums</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-content>
-        <div class="label">Weighted APR</div>
         <div class="value">{{ debts.weightedApr() }}%</div>
+        <div class="label">Weighted APR</div>
         <div class="hint">Balance-weighted</div>
       </mat-card-content>
     </mat-card>
 
     <mat-card>
       <mat-card-content>
-        <div class="label">Goals remaining</div>
         <div class="value">{{ totalGoalRemaining() | currency }}</div>
+        <div class="label">Goals remaining</div>
         <div class="hint">{{ goalCount() }} goal(s)</div>
       </mat-card-content>
     </mat-card>

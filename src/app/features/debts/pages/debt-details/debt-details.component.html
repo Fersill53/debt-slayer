@@ -1,6 +1,7 @@
 <section class="page" *ngIf="debt() as d; else missing">
   <header class="header">
     <div>
+      <div class="eyebrow">Debt details</div>
       <h1>{{ d.name }}</h1>
       <p class="sub">
         Balance <strong>{{ d.balance | currency }}</strong>

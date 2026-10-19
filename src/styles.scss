@@ -10,29 +10,119 @@ html {
   height: 100%;
   @include mat.theme((
     color: (
+      theme-type: dark,
       primary: mat.$azure-palette,
       tertiary: mat.$blue-palette,
     ),
-    typography: Roboto,
+    typography: (
+      plain-family: 'IBM Plex Sans',
+      brand-family: 'IBM Plex Sans',
+    ),
     density: 0,
+  ));
+
+  // App palette: dark navy surfaces, soft blue accent, amber for "needs attention".
+  --ds-bg: #0d1017;
+  --ds-panel: rgba(22, 27, 38, 0.72);
+  --ds-panel-solid: #161b26;
+  --ds-line: rgba(148, 163, 184, 0.14);
+  --ds-line-strong: rgba(148, 163, 184, 0.26);
+  --ds-grid: rgba(148, 163, 184, 0.06);
+  --ds-text: #e8edf6;
+  --ds-text-muted: #9aa6bb;
+  --ds-text-faint: #6b778c;
+  --ds-accent: #8fbaff;
+  --ds-accent-strong: #5b9dff;
+  --ds-stat: #cfe0ff;
+  --ds-amber: #f5a524;
+  --ds-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  // Material components on the dark panels.
+  @include mat.card-overrides((
+    elevated-container-color: var(--ds-panel),
+    elevated-container-elevation: none,
+    elevated-container-shape: 14px,
+  ));
+  @include mat.toolbar-overrides((
+    container-background-color: rgba(13, 16, 23, 0.72),
+    container-text-color: var(--ds-text),
+  ));
+  @include mat.menu-overrides((
+    container-color: var(--ds-panel-solid),
+  ));
+  @include mat.form-field-overrides((
+    outlined-outline-color: var(--ds-line-strong),
+  ));
+  @include mat.button-overrides((
+    protected-container-color: var(--ds-accent-strong),
+    protected-label-text-color: #0b1220,
+    outlined-outline-color: var(--ds-line-strong),
+  ));
+  @include mat.divider-overrides((
+    color: var(--ds-line),
   ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
-
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  color-scheme: dark;
+  background-color: var(--ds-bg);
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(59, 130, 246, 0.16), transparent 62%),
+    radial-gradient(900px 480px at 100% -8%, rgba(139, 92, 246, 0.09), transparent 60%);
+  background-attachment: fixed;
+  color: var(--ds-text);
   font: var(--mat-sys-body-medium);
+  font-size: 0.95rem;
 
   // Reset the user agent margin.
   margin: 0;
-  height: 100%;
+  min-height: 100%;
 }
-/* You can add global styles to this file, and also import other style files */
+
+// Faint blueprint grid behind the top of the page, fading out as it goes down.
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--ds-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ds-grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 55%);
+}
+
+// Cards: translucent panels with a hairline border.
+.mat-mdc-card {
+  border: 1px solid var(--ds-line);
+  backdrop-filter: blur(6px);
+}
+
+// Small monospace caption above a page title, e.g. "PLANNER · AVALANCHE".
+.eyebrow {
+  font-family: var(--ds-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ds-accent-strong);
+  margin-bottom: 0.5rem;
+}
+
+// Blue gradient word in a title.
+.accent {
+  background: linear-gradient(90deg, #c7dcff 0%, var(--ds-accent) 60%, var(--ds-accent-strong) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h1,
+h2 {
+  color: #f4f7fc;
+}
+
+strong {
+  color: var(--ds-text);
+}

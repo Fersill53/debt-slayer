@@ -8,17 +8,22 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
 
   h1 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 }
 
 .sub {
   margin: 0.25rem 0 0;
-  opacity: 0.8;
+  color: var(--ds-text-muted);
+  line-height: 1.55;
+  max-width: 62ch;
 }
 
 .controls {
@@ -40,7 +45,7 @@
 
 .hint {
   grid-column: 1 / -1;
-  opacity: 0.8;
+  color: var(--ds-text-muted);
 }
 
 .rec {
@@ -93,7 +98,7 @@
 }
 
 .warn {
-  opacity: 0.8;
+  color: var(--ds-text-muted);
   font-size: 0.95rem;
 }
 
@@ -105,12 +110,18 @@
 }
 
 .stat .label {
-  font-weight: 600;
-  opacity: 0.85;
+  font-family: var(--ds-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-text-faint);
 }
 
 .stat .value {
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ds-stat);
   margin-top: 0.2rem;
 }
 
@@ -125,7 +136,7 @@
 
 .miniHint {
   margin-top: 0.35rem;
-  opacity: 0.75;
+  color: var(--ds-text-muted);
 }
 
 .empty {
@@ -147,5 +158,5 @@
 }
 
 .budgetHint {
-  opacity: 0.85;
+  color: var(--ds-text-muted);
 }

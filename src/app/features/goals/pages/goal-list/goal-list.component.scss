@@ -8,17 +8,22 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
 
   h1 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 }
 
 .sub {
   margin: 0.25rem 0 0;
-  opacity: 0.85;
+  color: var(--ds-text-muted);
+  line-height: 1.55;
+  max-width: 62ch;
 }
 
 .dot {
@@ -53,7 +58,7 @@
 }
 
 .tag {
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--ds-line);
   border-radius: 999px;
   padding: 0.15rem 0.55rem;
   font-size: 0.9rem;
@@ -65,7 +70,7 @@
   flex-wrap: wrap;
   gap: 0.45rem;
   margin-top: 0.35rem;
-  opacity: 0.8;
+  color: var(--ds-text-muted);
 }
 
 .sep {
@@ -74,7 +79,7 @@
 
 .pct {
   margin-top: 0.35rem;
-  opacity: 0.75;
+  color: var(--ds-text-muted);
 }
 
 .right {

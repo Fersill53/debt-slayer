@@ -8,17 +8,22 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
 
   h1 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: clamp(1.9rem, 4vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 }
 
 .sub {
   margin: 0.25rem 0 0;
-  opacity: 0.85;
+  color: var(--ds-text-muted);
+  line-height: 1.55;
+  max-width: 62ch;
 }
 
 .dot {
@@ -65,8 +70,12 @@
 }
 
 .item .label {
-  font-weight: 600;
-  opacity: 0.85;
+  font-family: var(--ds-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-text-faint);
 }
 
 .item .value {
@@ -82,7 +91,7 @@
 }
 
 .empty {
-  opacity: 0.75;
+  color: var(--ds-text-muted);
 }
 
 .payments {
@@ -96,7 +105,7 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--ds-line);
 }
 
 .pRow:last-child {
@@ -113,7 +122,7 @@
 }
 
 .pDate {
-  opacity: 0.75;
+  color: var(--ds-text-muted);
 }
 
 .missing {

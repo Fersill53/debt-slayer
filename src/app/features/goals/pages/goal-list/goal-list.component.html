@@ -1,7 +1,8 @@
 <section class="page">
   <header class="header">
     <div>
-      <h1>Goals</h1>
+      <div class="eyebrow">Goals · {{ goalsVm().length }} active</div>
+      <h1>Savings <span class="accent">Goals</span></h1>
       <p class="sub">
         Saved <strong>{{ store.totalSaved() | currency }}</strong>
         <span class="dot">•</span>
