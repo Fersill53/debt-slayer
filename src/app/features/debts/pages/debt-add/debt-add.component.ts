@@ -78,6 +78,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { DebtStore } from '../../services/debt-store.service';
 import { Debt } from '../../models/debt.model';
@@ -93,7 +95,9 @@ import { Debt } from '../../models/debt.model';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './debt-add.component.html',
   styleUrls: ['./debt-add.component.scss'],
 })
@@ -109,7 +113,8 @@ export class DebtAddComponent {
     balance: [0, [Validators.required, Validators.min(0.01)]],
     apr: [0, [Validators.required, Validators.min(0), Validators.max(200)]],
     minPayment: [0, [Validators.required, Validators.min(0.01)]],
-    dueDay: [null as number | null, [Validators.min(1), Validators.max(31)]],
+    // Picked from a calendar; only the day of the month is saved (it repeats monthly).
+    dueDate: [null as Date | null],
   });
 
   cancel() {
@@ -131,7 +136,7 @@ export class DebtAddComponent {
       balance: Number(raw.balance),
       apr: Number(raw.apr),
       minPayment: Number(raw.minPayment),
-      dueDay: raw.dueDay ?? undefined,
+      dueDay: raw.dueDate ? raw.dueDate.getDate() : undefined,
     };
 
     this.store.add(debt);

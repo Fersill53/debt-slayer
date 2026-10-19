@@ -58,6 +58,9 @@ html {
     protected-label-text-color: #0b1220,
     outlined-outline-color: var(--ds-line-strong),
   ));
+  @include mat.datepicker-overrides((
+    calendar-container-background-color: var(--ds-panel-solid),
+  ));
   @include mat.divider-overrides((
     color: var(--ds-line),
   ));

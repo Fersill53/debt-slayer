@@ -34,8 +34,11 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Due day (optional)</mat-label>
-            <input matInput type="number" formControlName="dueDay" />
+            <mat-label>Next due date (optional)</mat-label>
+            <input matInput [matDatepicker]="duePicker" formControlName="dueDate" (click)="duePicker.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="duePicker"></mat-datepicker-toggle>
+            <mat-datepicker #duePicker></mat-datepicker>
+            <mat-hint>Repeats monthly on this day</mat-hint>
           </mat-form-field>
         </div>
 
